@@ -309,9 +309,9 @@ export function ServicesPage({ onNavigate }: ServicesPageProps) {
 
   // Success metrics
   const metrics = [
-    { label: 'Projects Delivered', value: '100+', icon: Rocket },
-    { label: 'Client Satisfaction', value: '92%', icon: Star },
-    { label: 'Years Experience', value: '10+', icon: Award },
+    { label: 'Projects Delivered', value: '500+', icon: Rocket },
+    { label: 'Client Satisfaction', value: '99%', icon: Star },
+    { label: 'Years Experience', value: '8+', icon: Award },
     { label: 'Team Members', value: '25+', icon: Users }
   ];
 
@@ -332,7 +332,7 @@ export function ServicesPage({ onNavigate }: ServicesPageProps) {
       {/* Hero Section */}
       <section 
         ref={heroRef.elementRef}
-        className={`min-h-screen flex flex-col justify-center py-16 sm:py-20 md:py-24 lg:py-32 bg-background section-reveal snap-start ${
+        className={`py-16 sm:py-20 md:py-24 lg:py-32 bg-background section-reveal ${
           heroRef.isVisible ? 'visible' : ''
         }`}
       >
@@ -393,7 +393,7 @@ export function ServicesPage({ onNavigate }: ServicesPageProps) {
       {/* Detailed Services */}
       <section 
         ref={servicesRef.elementRef}
-        className={`min-h-screen flex flex-col justify-center py-20 bg-muted/30 section-reveal snap-start ${
+        className={`py-20 bg-muted/30 section-reveal ${
           servicesRef.isVisible ? 'visible' : ''
         }`}
       >
@@ -499,7 +499,7 @@ export function ServicesPage({ onNavigate }: ServicesPageProps) {
       {/* Technology Expertise */}
       <section 
         ref={techRef.elementRef}
-        className={`min-h-screen flex flex-col justify-center py-20 bg-background section-reveal snap-start ${
+        className={`py-20 bg-background section-reveal ${
           techRef.isVisible ? 'visible' : ''
         }`}
       >
@@ -545,7 +545,7 @@ export function ServicesPage({ onNavigate }: ServicesPageProps) {
       {/* Development Process */}
       <section 
         ref={processRef.elementRef}
-        className={`min-h-screen flex flex-col justify-center py-20 bg-muted/30 section-reveal snap-start ${
+        className={`py-20 bg-muted/30 section-reveal ${
           processRef.isVisible ? 'visible' : ''
         }`}
       >
@@ -612,7 +612,7 @@ export function ServicesPage({ onNavigate }: ServicesPageProps) {
       {/* Pricing Plans */}
       <section 
         ref={pricingRef.elementRef}
-        className={`min-h-screen flex flex-col justify-center py-20 bg-background section-reveal snap-start ${
+        className={`py-20 bg-background section-reveal ${
           pricingRef.isVisible ? 'visible' : ''
         }`}
       >
@@ -673,7 +673,7 @@ export function ServicesPage({ onNavigate }: ServicesPageProps) {
       {/* Client Testimonials */}
       <section 
         ref={testimonialsRef.elementRef}
-        className={`min-h-screen flex flex-col justify-center py-20 bg-muted/30 section-reveal snap-start ${
+        className={`py-20 bg-muted/30 section-reveal ${
           testimonialsRef.isVisible ? 'visible' : ''
         }`}
       >
@@ -735,7 +735,7 @@ export function ServicesPage({ onNavigate }: ServicesPageProps) {
       {/* Final CTA */}
       <section 
         ref={ctaRef.elementRef}
-        className={`min-h-screen flex flex-col justify-center py-20 bg-background section-reveal snap-start ${
+        className={`py-20 bg-background section-reveal ${
           ctaRef.isVisible ? 'visible' : ''
         }`}
       >

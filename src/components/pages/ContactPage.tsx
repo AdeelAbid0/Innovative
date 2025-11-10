@@ -180,9 +180,8 @@ export function ContactPage({ onNavigate }: ContactPageProps) {
       {/* Hero Section */}
       <section
         ref={heroRef.elementRef}
-        className={`py-24 md:py-32 bg-background section-reveal ${
-          heroRef.isVisible ? "visible" : ""
-        }`}
+        className={`py-24 md:py-32 bg-background section-reveal ${heroRef.isVisible ? "visible" : ""
+          }`}
       >
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center space-y-8">
@@ -232,9 +231,8 @@ export function ContactPage({ onNavigate }: ContactPageProps) {
       {/* Contact Methods */}
       <section
         ref={contactMethodsRef.elementRef}
-        className={`py-20 bg-muted/30 section-reveal ${
-          contactMethodsRef.isVisible ? "visible" : ""
-        }`}
+        className={`py-20 bg-muted/30 section-reveal ${contactMethodsRef.isVisible ? "visible" : ""
+          }`}
       >
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
@@ -247,9 +245,8 @@ export function ContactPage({ onNavigate }: ContactPageProps) {
           </div>
 
           <div
-            className={`grid grid-cols-1 md:grid-cols-3 gap-8 stagger-children ${
-              contactMethodsRef.isVisible ? "animate" : ""
-            }`}
+            className={`grid grid-cols-1 md:grid-cols-3 gap-8 stagger-children ${contactMethodsRef.isVisible ? "animate" : ""
+              }`}
           >
             {contactMethods.map((method, index) => {
               const IconComponent = method.icon;
@@ -297,9 +294,8 @@ export function ContactPage({ onNavigate }: ContactPageProps) {
       <section
         id="contact-form"
         ref={formRef.elementRef}
-        className={`py-20 bg-background section-reveal ${
-          formRef.isVisible ? "visible" : ""
-        }`}
+        className={`py-20 bg-background section-reveal ${formRef.isVisible ? "visible" : ""
+          }`}
       >
         <div className="max-w-5xl mx-auto px-6">
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-12">
@@ -534,9 +530,8 @@ export function ContactPage({ onNavigate }: ContactPageProps) {
       {/* FAQ Section */}
       <section
         ref={faqRef.elementRef}
-        className={`py-20 bg-muted/30 section-reveal ${
-          faqRef.isVisible ? "visible" : ""
-        }`}
+        className={`py-20 bg-muted/30 section-reveal ${faqRef.isVisible ? "visible" : ""
+          }`}
       >
         <div className="max-w-4xl mx-auto px-6">
           <div className="text-center mb-16">
@@ -549,9 +544,8 @@ export function ContactPage({ onNavigate }: ContactPageProps) {
           </div>
 
           <div
-            className={`grid grid-cols-1 md:grid-cols-2 gap-8 stagger-children ${
-              faqRef.isVisible ? "animate" : ""
-            }`}
+            className={`grid grid-cols-1 md:grid-cols-2 gap-8 stagger-children ${faqRef.isVisible ? "animate" : ""
+              }`}
           >
             {faqs.map((faq, index) => (
               <Card
@@ -585,9 +579,8 @@ export function ContactPage({ onNavigate }: ContactPageProps) {
       {/* Call to Action */}
       <section
         ref={finalCtaRef.elementRef}
-        className={`py-20 bg-background section-reveal ${
-          finalCtaRef.isVisible ? "visible" : ""
-        }`}
+        className={`py-20 bg-background section-reveal ${finalCtaRef.isVisible ? "visible" : ""
+          }`}
       >
         <div className="max-w-4xl mx-auto px-6 text-center">
           <h2 className="text-3xl font-bold text-foreground mb-4">

@@ -490,6 +490,31 @@ input[placeholder*="Search templates"]:active {
     letter-spacing: -0.01em;
   }
   
+  /* Mobile Hero Title - Bigger and Centered */
+  .mobile-hero-title {
+    font-size: clamp(2.5rem, 10vw, 3.5rem) !important;
+    line-height: 1.15 !important;
+    text-align: center !important;
+    display: block !important;
+  }
+  
+  /* Mobile Hero Subtitle - Smaller Text */
+  .mobile-hero-subtitle {
+    font-size: 0.875rem !important; /* 14px */
+    line-height: 1.6 !important;
+    text-align: center !important;
+    display: block !important;
+  }
+  
+  /* Force hide on mobile devices */
+  .md\:block {
+    display: none !important;
+  }
+  
+  .md\:inline-flex {
+    display: none !important;
+  }
+  
   .hover-scale:hover {
     transform: none;
   }
@@ -537,6 +562,92 @@ input[placeholder*="Search templates"]:active {
   .orbiting-sparkle-reverse {
     animation: none !important;
   }
+}
+
+/* Coding Effects Animations */
+@keyframes fallDown {
+  0% { 
+    transform: translateY(-100%); 
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% { 
+    transform: translateY(100vh); 
+    opacity: 0;
+  }
+}
+
+@keyframes float {
+  0%, 100% { 
+    transform: translateY(0px) translateX(0px); 
+  }
+  25% { 
+    transform: translateY(-20px) translateX(10px); 
+  }
+  50% { 
+    transform: translateY(-10px) translateX(-10px); 
+  }
+  75% { 
+    transform: translateY(-15px) translateX(5px); 
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@keyframes codeGlow {
+  0%, 100% {
+    text-shadow: 0 0 5px rgba(12, 228, 33, 0.3);
+  }
+  50% {
+    text-shadow: 0 0 20px rgba(12, 228, 33, 0.6);
+  }
+}
+
+@keyframes slideInCode {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes twinkle {
+  0%, 100% {
+    opacity: 0.2;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}
+
+/* Coding effects utility classes */
+.code-glow {
+  animation: codeGlow 3s ease-in-out infinite;
+}
+
+.code-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.code-twinkle {
+  animation: twinkle 2s ease-in-out infinite;
 }
 
 /* STICKY HEADER SYSTEM - FIXED FOR ALL DEVICES */
@@ -818,6 +929,17 @@ button[class*="variant-link"] { color: var(--primary) !important; }
   animation-fill-mode: both;
 }
 
+/* Desktop - Show hidden elements */
+@media (min-width: 769px) {
+  .md\:block {
+    display: block !important;
+  }
+  
+  .md\:inline-flex {
+    display: inline-flex !important;
+  }
+}
+
 /* Responsive center alignment */
 @media (min-width: 1024px) {
   .lg-center {
@@ -931,14 +1053,6 @@ button[class*="variant-link"] { color: var(--primary) !important; }
   background: radial-gradient(ellipse at center, transparent 0%, rgba(33, 33, 33, 0.3) 70%);
 }
 
-/* Hero CTA Button - Override to use dark text */
-button.hero-cta-button,
-button.hero-cta-button:hover,
-button.hero-cta-button:active,
-button.hero-cta-button:focus {
-  color: #111827 !important; /* Dark gray text */
-}
-
 /* CONSOLIDATED BUTTON TEXT COLOR - ALL BUTTONS USE WHITE TEXT */
 button,
 button:hover,
@@ -951,6 +1065,14 @@ button[data-ui="button"],
 [data-ui="button"],
 button[data-variant] {
   color: #ffffff !important;
+}
+
+/* Hero CTA Button - Override to use dark text */
+button.hero-cta-button,
+button.hero-cta-button:hover,
+button.hero-cta-button:active,
+button.hero-cta-button:focus {
+  color: #000000 !important; /* Black text for green button */
 }
 
 /* HEADER NAVIGATION OVERRIDE - Keep header nav items WHITE */

@@ -2,13 +2,13 @@ import React from 'react';
 import { Button } from '../ui/button';
 import { Card, CardContent } from '../ui/card';
 import { Badge } from '../ui/badge';
-import { 
-  Users, 
-  Target, 
-  Lightbulb, 
-  Code, 
-  Smartphone, 
-  Globe, 
+import {
+  Users,
+  Target,
+  Lightbulb,
+  Code,
+  Smartphone,
+  Globe,
   ArrowRight,
   CheckCircle,
   Zap,
@@ -31,25 +31,25 @@ interface AboutPageProps {
 
 const stats = [
   {
-    number: "100+",
+    number: "500+",
     label: "Projects Delivered",
     icon: Briefcase,
     description: "Successful implementations"
   },
   {
-    number: "35+",
+    number: "150+",
     label: "Happy Clients",
     icon: Users,
     description: "Worldwide partnerships"
   },
   {
-    number: "10+",
+    number: "8+",
     label: "Years Experience",
     icon: TrendingUp,
     description: "Industry expertise"
   },
   {
-    number: "92%",
+    number: "99%",
     label: "Client Satisfaction",
     icon: Star,
     description: "Project success rate"
@@ -64,7 +64,7 @@ const journey = [
     icon: Lightbulb
   },
   {
-    year: "2018", 
+    year: "2018",
     title: "First Enterprise Client",
     description: "Landed our first major enterprise project, establishing our reputation for delivering complex solutions.",
     icon: Briefcase
@@ -108,7 +108,7 @@ const values = [
 
 const technologies = [
   "React & Next.js",
-  "Node.js & Python", 
+  ".NET, Node.js & Python",
   "Cloud Platforms (AWS, Azure)",
   "AI & Machine Learning",
   "Mobile Development",
@@ -122,7 +122,7 @@ const teamRoles = [
     icon: Code
   },
   {
-    role: "Mobile Developers", 
+    role: "Mobile Developers",
     count: "6+",
     icon: Smartphone
   },
@@ -133,7 +133,7 @@ const teamRoles = [
   },
   {
     role: "AI Specialists",
-    count: "3+", 
+    count: "3+",
     icon: Brain
   },
   {
@@ -163,26 +163,25 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
   return (
     <div className="min-h-screen bg-background">
       <div className="max-w-6xl mx-auto px-4 py-16 space-y-20">
-        
+
         {/* Hero Section */}
-        <div 
-          ref={heroRef.elementRef} 
-          className={`text-center space-y-8 section-reveal ${
-            heroRef.isVisible ? 'visible' : ''
-          }`}
+        <div
+          ref={heroRef.elementRef}
+          className={`text-center space-y-8 section-reveal ${heroRef.isVisible ? 'visible' : ''
+            }`}
         >
           <div className="space-y-6">
             <Badge variant="outline" className="px-4 py-2 text-sm scroll-animate-badge">
               🚀 About Nexus Core
             </Badge>
-            
+
             <h1 className="text-4xl md:text-5xl font-bold text-foreground">
               Building the <span className="text-primary">Future</span> of Software
             </h1>
-            
+
             <p className="text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-              We are a passionate team of software engineers, designers, and innovators 
-              dedicated to transforming ideas into powerful digital solutions. Since 2016, 
+              We are a passionate team of software engineers, designers, and innovators
+              dedicated to transforming ideas into powerful digital solutions. Since 2016,
               we've been helping businesses leverage technology to achieve their goals.
             </p>
           </div>
@@ -201,11 +200,10 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
         </div>
 
         {/* Stats Section */}
-        <div 
+        <div
           ref={statsRef.elementRef}
-          className={`grid grid-cols-2 md:grid-cols-4 gap-6 stagger-children ${
-            statsRef.isVisible ? 'animate' : ''
-          }`}
+          className={`grid grid-cols-2 md:grid-cols-4 gap-6 stagger-children ${statsRef.isVisible ? 'animate' : ''
+            }`}
         >
           {stats.map((stat, index) => {
             const IconComponent = stat.icon;
@@ -227,11 +225,10 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
         </div>
 
         {/* Mission & Vision */}
-        <div 
+        <div
           ref={missionRef.elementRef}
-          className={`grid grid-cols-1 md:grid-cols-2 gap-8 stagger-children ${
-            missionRef.isVisible ? 'animate' : ''
-          }`}
+          className={`grid grid-cols-1 md:grid-cols-2 gap-8 stagger-children ${missionRef.isVisible ? 'animate' : ''
+            }`}
         >
           <Card className="p-6 scroll-animate-card card-premium">
             <CardContent className="space-y-4">
@@ -242,8 +239,8 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
                 <h3 className="text-xl font-semibold text-foreground">Mission</h3>
               </div>
               <p className="text-muted-foreground leading-relaxed">
-                To empower businesses through innovative software solutions that drive growth, 
-                efficiency, and competitive advantage. We bridge the gap between complex technology 
+                To empower businesses through innovative software solutions that drive growth,
+                efficiency, and competitive advantage. We bridge the gap between complex technology
                 and practical business needs, making digital transformation accessible and impactful.
               </p>
             </CardContent>
@@ -258,8 +255,8 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
                 <h3 className="text-xl font-semibold text-foreground">Vision</h3>
               </div>
               <p className="text-muted-foreground leading-relaxed">
-                To be the leading software development partner that businesses trust for their 
-                most critical projects. We envision a future where technology seamlessly integrates 
+                To be the leading software development partner that businesses trust for their
+                most critical projects. We envision a future where technology seamlessly integrates
                 with business processes, creating unprecedented opportunities for innovation and growth.
               </p>
             </CardContent>
@@ -267,11 +264,10 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
         </div>
 
         {/* Company Journey Timeline */}
-        <div 
+        <div
           ref={journeyRef.elementRef}
-          className={`space-y-8 section-reveal ${
-            journeyRef.isVisible ? 'visible' : ''
-          }`}
+          className={`space-y-8 section-reveal ${journeyRef.isVisible ? 'visible' : ''
+            }`}
         >
           <div className="text-center space-y-4">
             <h2 className="text-3xl font-bold text-foreground">Our Journey</h2>
@@ -315,11 +311,10 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
         </div>
 
         {/* Core Values */}
-        <div 
+        <div
           ref={valuesRef.elementRef}
-          className={`space-y-8 section-reveal ${
-            valuesRef.isVisible ? 'visible' : ''
-          }`}
+          className={`space-y-8 section-reveal ${valuesRef.isVisible ? 'visible' : ''
+            }`}
         >
           <div className="text-center space-y-4">
             <h2 className="text-3xl font-bold text-foreground">Core Values</h2>
@@ -328,9 +323,8 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
             </p>
           </div>
 
-          <div className={`grid grid-cols-1 md:grid-cols-2 gap-6 stagger-children ${
-            valuesRef.isVisible ? 'animate' : ''
-          }`}>
+          <div className={`grid grid-cols-1 md:grid-cols-2 gap-6 stagger-children ${valuesRef.isVisible ? 'animate' : ''
+            }`}>
             {values.map((value, index) => {
               const IconComponent = value.icon;
               return (
@@ -351,11 +345,10 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
         </div>
 
         {/* Our Team */}
-        <div 
+        <div
           ref={teamRef.elementRef}
-          className={`space-y-8 section-reveal ${
-            teamRef.isVisible ? 'visible' : ''
-          }`}
+          className={`space-y-8 section-reveal ${teamRef.isVisible ? 'visible' : ''
+            }`}
         >
           <div className="text-center space-y-4">
             <h2 className="text-3xl font-bold text-foreground">Our Expert Team</h2>
@@ -364,9 +357,8 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
             </p>
           </div>
 
-          <div className={`grid grid-cols-2 md:grid-cols-3 gap-6 stagger-children ${
-            teamRef.isVisible ? 'animate' : ''
-          }`}>
+          <div className={`grid grid-cols-2 md:grid-cols-3 gap-6 stagger-children ${teamRef.isVisible ? 'animate' : ''
+            }`}>
             {teamRoles.map((team, index) => {
               const IconComponent = team.icon;
               return (
@@ -387,11 +379,10 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
         </div>
 
         {/* Technology Stack */}
-        <div 
+        <div
           ref={techRef.elementRef}
-          className={`bg-muted/30 rounded-2xl p-8 space-y-8 section-reveal ${
-            techRef.isVisible ? 'visible' : ''
-          }`}
+          className={`bg-muted/30 rounded-2xl p-8 space-y-8 section-reveal ${techRef.isVisible ? 'visible' : ''
+            }`}
         >
           <div className="text-center space-y-4">
             <div className="flex items-center justify-center space-x-2">
@@ -414,19 +405,18 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
         </div>
 
         {/* Why Choose Us */}
-        <div 
+        <div
           ref={whyChooseRef.elementRef}
-          className={`text-center space-y-6 section-reveal ${
-            whyChooseRef.isVisible ? 'visible' : ''
-          }`}
+          className={`text-center space-y-6 section-reveal ${whyChooseRef.isVisible ? 'visible' : ''
+            }`}
         >
           <div className="space-y-4">
             <h2 className="text-2xl font-semibold text-foreground">
               Why Choose Nexus Core?
             </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              We combine technical expertise with business insight to deliver solutions that 
-              not only work flawlessly but also drive real business value. Our agile approach 
+              We combine technical expertise with business insight to deliver solutions that
+              not only work flawlessly but also drive real business value. Our agile approach
               ensures rapid delivery without compromising quality.
             </p>
           </div>
@@ -452,24 +442,23 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
         </div>
 
         {/* Call to Action */}
-        <div 
+        <div
           ref={ctaRef.elementRef}
-          className={`text-center space-y-8 pt-8 border-t border-muted-foreground/10 section-reveal ${
-            ctaRef.isVisible ? 'visible' : ''
-          }`}
+          className={`text-center space-y-8 pt-8 border-t border-muted-foreground/10 section-reveal ${ctaRef.isVisible ? 'visible' : ''
+            }`}
         >
           <div className="space-y-4">
             <h2 className="text-3xl font-bold text-foreground">
               Ready to Start Your Project?
             </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              Let's discuss how we can help transform your ideas into powerful software solutions 
+              Let's discuss how we can help transform your ideas into powerful software solutions
               that drive your business forward.
             </p>
           </div>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button 
+            <Button
               onClick={() => onNavigate('contact')}
               size="lg"
               className="btn-premium"
@@ -477,7 +466,7 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
               Start Your Project
               <ArrowRight className="w-5 h-5 ml-2" />
             </Button>
-            <Button 
+            <Button
               onClick={() => onNavigate('services')}
               variant="outline"
               size="lg"

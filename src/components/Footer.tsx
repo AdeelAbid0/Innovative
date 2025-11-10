@@ -2,7 +2,7 @@ import React from 'react';
 import { Button } from './ui/button';
 import { Logo } from './Logo';
 import { Separator } from './ui/separator';
-import { ArrowRight, Mail, MapPin, Phone, Globe, Heart, Code } from 'lucide-react';
+import { ArrowRight, Mail, MapPin, Phone, Globe, Heart, Code, Linkedin, Twitter, Facebook, Instagram, Github } from 'lucide-react';
 
 type Page = 'home' | 'about' | 'services' | 'products' | 'contact' | 'thank-you';
 
@@ -106,31 +106,60 @@ export function Footer({ onNavigate }: FooterProps) {
             </div>
           </div>
 
-          {/* Newsletter Signup */}
+          {/* Social Media Links */}
           <div className="space-y-4">
             <h3 className="font-bold text-foreground">Stay Connected</h3>
             <p className="text-muted-foreground text-sm">
-              Get updates on our latest projects and technology insights.
+              Follow us on social media for updates and insights.
             </p>
             
-            <form onSubmit={handleEmailSubscription} className="space-y-3">
-              <div className="flex gap-2">
-                <input
-                  type="email"
-                  name="email"
-                  placeholder="Your email"
-                  className="flex-1 px-3 py-2 bg-[#2d2d2d] border border-white/10 rounded-lg text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
-                  required
-                />
-                <Button 
-                  type="submit"
-                  size="sm" 
-                  className="bg-primary hover:bg-primary/90 text-primary-foreground px-4"
-                >
-                  <ArrowRight className="w-4 h-4" />
-                </Button>
-              </div>
-            </form>
+            <div className="flex flex-wrap gap-3">
+              <a
+                href="https://linkedin.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-10 h-10 bg-[#2d2d2d] border border-white/10 rounded-lg flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary/50 transition-all duration-300 hover:scale-110"
+                aria-label="LinkedIn"
+              >
+                <Linkedin className="w-5 h-5" />
+              </a>
+              <a
+                href="https://twitter.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-10 h-10 bg-[#2d2d2d] border border-white/10 rounded-lg flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary/50 transition-all duration-300 hover:scale-110"
+                aria-label="Twitter"
+              >
+                <Twitter className="w-5 h-5" />
+              </a>
+              <a
+                href="https://facebook.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-10 h-10 bg-[#2d2d2d] border border-white/10 rounded-lg flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary/50 transition-all duration-300 hover:scale-110"
+                aria-label="Facebook"
+              >
+                <Facebook className="w-5 h-5" />
+              </a>
+              <a
+                href="https://instagram.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-10 h-10 bg-[#2d2d2d] border border-white/10 rounded-lg flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary/50 transition-all duration-300 hover:scale-110"
+                aria-label="Instagram"
+              >
+                <Instagram className="w-5 h-5" />
+              </a>
+              <a
+                href="https://github.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-10 h-10 bg-[#2d2d2d] border border-white/10 rounded-lg flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary/50 transition-all duration-300 hover:scale-110"
+                aria-label="GitHub"
+              >
+                <Github className="w-5 h-5" />
+              </a>
+            </div>
           </div>
         </div>
 
