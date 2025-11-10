@@ -15,7 +15,7 @@ export function Navbar({ currentPage, onNavigate }: NavbarProps) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
-
+  
   useEffect(() => {
     const handleScroll = () => {
       const scrollPosition = window.scrollY;
@@ -24,7 +24,7 @@ export function Navbar({ currentPage, onNavigate }: NavbarProps) {
       // Determine which section is currently in view
       const sections = ['home', 'services', 'work', 'about', 'contact'];
       const sectionElements = sections.map(id => document.getElementById(id));
-
+      
       for (let i = sectionElements.length - 1; i >= 0; i--) {
         const element = sectionElements[i];
         if (element) {
@@ -59,8 +59,7 @@ export function Navbar({ currentPage, onNavigate }: NavbarProps) {
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
-      // instead of smooth scroll, jump section fully
-      element.scrollIntoView({ behavior: "instant", block: "start" });
+      element.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
@@ -71,11 +70,11 @@ export function Navbar({ currentPage, onNavigate }: NavbarProps) {
   return (
     <>
       {/* STICKY HEADER - Clean and working */}
-      <header
+      <header 
         className={`
           sticky-nav transition-all duration-300 ease-out header-blur
-          ${isScrolled
-            ? 'bg-[#212121]/98 backdrop-blur-xl border-b border-white/10 header-shadow-scrolled'
+          ${isScrolled 
+            ? 'bg-[#212121]/98 backdrop-blur-xl border-b border-white/10 header-shadow-scrolled' 
             : 'bg-[#212121]/90 backdrop-blur-sm header-shadow'
           }
         `}
@@ -85,9 +84,9 @@ export function Navbar({ currentPage, onNavigate }: NavbarProps) {
             flex items-center justify-between lg:justify-center relative transition-all duration-300
             ${isScrolled ? 'h-14' : 'h-16'}
           `}>
-
+            
             {/* Logo - Left positioned on desktop */}
-            <div
+            <div 
               className={`
                 cursor-pointer lg:absolute lg:left-0 transition-all duration-300 
                 hover:scale-110 active:scale-95
@@ -120,14 +119,14 @@ export function Navbar({ currentPage, onNavigate }: NavbarProps) {
                   className={`
                     relative px-4 py-2 text-sm font-medium transition-all duration-300 
                     rounded-lg group hover:scale-105 active:scale-95 nav-item
-                    ${isActive(item.section)
-                      ? 'text-primary font-bold bg-primary/10 shadow-lg shadow-primary/20 nav-item-active'
+                    ${isActive(item.section) 
+                      ? 'text-primary font-bold bg-primary/10 shadow-lg shadow-primary/20 nav-item-active' 
                       : 'text-white/80 hover:text-white hover:bg-white/5'
                     }
                   `}
                 >
                   <span className="relative z-10">{item.label}</span>
-
+                  
                   {/* Active state indicator - Green dot */}
                   {isActive(item.section) && (
                     <>
@@ -135,7 +134,7 @@ export function Navbar({ currentPage, onNavigate }: NavbarProps) {
                       <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-primary/10 rounded-lg"></div>
                     </>
                   )}
-
+                  
                   {/* Hover effect for non-active items */}
                   {!isActive(item.section) && (
                     <div className="absolute inset-0 bg-white/0 group-hover:bg-white/5 rounded-lg transition-all duration-300"></div>
@@ -150,8 +149,8 @@ export function Navbar({ currentPage, onNavigate }: NavbarProps) {
               className={`
                 lg:hidden p-3 rounded-xl transition-all duration-300 
                 hover:scale-110 active:scale-95
-                ${isMobileMenuOpen
-                  ? 'text-primary bg-primary/20 shadow-lg shadow-primary/30'
+                ${isMobileMenuOpen 
+                  ? 'text-primary bg-primary/20 shadow-lg shadow-primary/30' 
                   : 'text-white/80 hover:text-white hover:bg-white/10'
                 }
               `}
@@ -171,12 +170,12 @@ export function Navbar({ currentPage, onNavigate }: NavbarProps) {
       {isMobileMenuOpen && (
         <>
           {/* Backdrop with blur */}
-          <div
+          <div 
             className="fixed inset-0 z-40 bg-black/70 backdrop-blur-md lg:hidden transition-all duration-300"
             onClick={() => setIsMobileMenuOpen(false)}
             style={{ top: isScrolled ? '56px' : '64px' }} // Adjust for header height
           />
-
+          
           {/* Mobile menu panel */}
           <div className={`
             fixed left-4 right-4 z-50 lg:hidden mobile-menu-panel
@@ -206,7 +205,7 @@ export function Navbar({ currentPage, onNavigate }: NavbarProps) {
                       : 'text-white/80 hover:text-white hover:bg-white/10 border border-transparent'
                     }
                   `}
-                  style={{
+                  style={{ 
                     animationName: 'slideIn',
                     animationDuration: '0.4s',
                     animationTimingFunction: 'ease-out',
