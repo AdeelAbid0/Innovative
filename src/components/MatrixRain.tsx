@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from "react";
 
 export function MatrixRain() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -7,7 +7,7 @@ export function MatrixRain() {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
     // Set canvas size
@@ -15,7 +15,8 @@ export function MatrixRain() {
     canvas.height = window.innerHeight;
 
     // Matrix characters - include code symbols
-    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%^&*(){}[]<>/\\|~';
+    const characters =
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%^&*(){}[]<>/\\|~";
     const fontSize = 14;
     const columns = canvas.width / fontSize;
 
@@ -30,11 +31,11 @@ export function MatrixRain() {
       if (!ctx || !canvas) return;
 
       // Semi-transparent black to create fade effect
-      ctx.fillStyle = 'rgba(33, 33, 33, 0.05)';
+      ctx.fillStyle = "rgba(33, 33, 33, 0.05)";
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
       // Green text
-      ctx.fillStyle = '#0CE421';
+      ctx.fillStyle = "#0CE421";
       ctx.font = `bold ${fontSize}px monospace`;
 
       // Draw characters
@@ -64,11 +65,11 @@ export function MatrixRain() {
       canvas.height = window.innerHeight;
     };
 
-    window.addEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
 
     return () => {
       clearInterval(interval);
-      window.removeEventListener('resize', handleResize);
+      window.removeEventListener("resize", handleResize);
     };
   }, []);
 
@@ -76,9 +77,9 @@ export function MatrixRain() {
     <canvas
       ref={canvasRef}
       className="absolute inset-0 opacity-15 pointer-events-none"
-      style={{ 
-        mixBlendMode: 'screen',
-        imageRendering: 'crisp-edges'
+      style={{
+        mixBlendMode: "screen",
+        imageRendering: "crisp-edges",
       }}
     />
   );

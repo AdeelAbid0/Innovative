@@ -1,10 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { Button } from './ui/button';
+import { useState, useEffect } from 'react';
 import { Menu, X, ArrowRight } from 'lucide-react';
 import { Logo } from './Logo';
-import { StandardButton } from './StandardButton';
 
-type Page = 'home' | 'about' | 'services' | 'work' | 'contact' | 'thank-you' | 'case-study' | 'admin';
+type Page = 'home' | 'about' | 'services' | 'work' | 'contact' | 'thank-you' | 'case-study';
 
 interface NavbarProps {
   currentPage: Page;

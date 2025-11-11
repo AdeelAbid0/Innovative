@@ -1,15 +1,32 @@
-import React, { useState, useEffect } from 'react';
-import { Button } from '../ui/button';
-import { Card } from '../ui/card';
-import { Badge } from '../ui/badge';
-import { Separator } from '../ui/separator';
-import { 
-  Download, CheckCircle, Star, Gift, Trophy, 
-  FileText, ArrowRight, Sparkles, 
-  Rocket, Heart, Mail, Shield
-} from 'lucide-react';
+import { useState, useEffect } from "react";
+import { Button } from "../ui/button";
+import { Card } from "../ui/card";
+import { Badge } from "../ui/badge";
+import { Separator } from "../ui/separator";
+import {
+  Download,
+  CheckCircle,
+  Star,
+  Gift,
+  Trophy,
+  FileText,
+  ArrowRight,
+  Sparkles,
+  Rocket,
+  Heart,
+  Mail,
+  Shield,
+} from "lucide-react";
 
-type Page = 'home' | 'templates' | 'template-detail' | 'how-to-launch' | 'custom-web' | 'thank-you' | 'checkout' | 'order-success';
+type Page =
+  | "home"
+  | "templates"
+  | "template-detail"
+  | "how-to-launch"
+  | "custom-web"
+  | "thank-you"
+  | "checkout"
+  | "order-success";
 
 interface ThankYouPageProps {
   onNavigate: (page: Page) => void;
@@ -23,14 +40,14 @@ interface SparkleEffect {
   color: string;
   duration: number;
   delay: number;
-  type: 'sparkle' | 'star' | 'heart' | 'trophy';
+  type: "sparkle" | "star" | "heart" | "trophy";
 }
 
 // Simple demo mode check - always returns true for this demo
 const isDemoMode = () => true;
 
 // Simple server URL - not used in demo mode
-const getServerUrl = () => 'https://demo.readytolaunch.com/api';
+const getServerUrl = () => "https://demo.readytolaunch.com/api";
 
 export function ThankYouPage({ onNavigate }: ThankYouPageProps) {
   const [orderData, setOrderData] = useState<any>(null);
@@ -40,17 +57,34 @@ export function ThankYouPage({ onNavigate }: ThankYouPageProps) {
   const [celebrationActive, setCelebrationActive] = useState(false);
 
   // Create dynamic sparkle bursts
-  const createSparkleWave = (centerX: number = 50, centerY: number = 40, count: number = 15) => {
+  const createSparkleWave = (
+    centerX: number = 50,
+    centerY: number = 40,
+    count: number = 15
+  ) => {
     const newSparkles: SparkleEffect[] = [];
-    const colors = ['#0CDA20', '#FFD700', '#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FFA726'];
-    const types: ('sparkle' | 'star' | 'heart' | 'trophy')[] = ['sparkle', 'star', 'heart', 'trophy'];
-    
+    const colors = [
+      "#0CDA20",
+      "#FFD700",
+      "#FF6B6B",
+      "#4ECDC4",
+      "#45B7D1",
+      "#96CEB4",
+      "#FFA726",
+    ];
+    const types: ("sparkle" | "star" | "heart" | "trophy")[] = [
+      "sparkle",
+      "star",
+      "heart",
+      "trophy",
+    ];
+
     for (let i = 0; i < count; i++) {
       const angle = (Math.PI * 2 * i) / count;
       const radius = 100 + Math.random() * 100;
       const x = centerX + Math.cos(angle) * radius;
       const y = centerY + Math.sin(angle) * radius;
-      
+
       newSparkles.push({
         id: Date.now() + i,
         x: Math.max(5, Math.min(95, x)),
@@ -59,43 +93,45 @@ export function ThankYouPage({ onNavigate }: ThankYouPageProps) {
         color: colors[Math.floor(Math.random() * colors.length)],
         duration: 2000 + Math.random() * 1000,
         delay: i * 50,
-        type: types[Math.floor(Math.random() * types.length)]
+        type: types[Math.floor(Math.random() * types.length)],
       });
     }
-    
+
     return newSparkles;
   };
 
   // Trigger celebration sequence
   const startCelebration = () => {
     setCelebrationActive(true);
-    
+
     // Initial burst
     setTimeout(() => {
       const initialSparkles = createSparkleWave(50, 30, 20);
       setSparkleEffects(initialSparkles);
-      
+
       // Clear after animation
       setTimeout(() => {
         setSparkleEffects([]);
       }, 3500);
     }, 800);
-    
+
     // Second wave
     setTimeout(() => {
       const secondWave = createSparkleWave(30, 60, 12);
-      setSparkleEffects(prev => [...prev, ...secondWave]);
-      
+      setSparkleEffects((prev) => [...prev, ...secondWave]);
+
       setTimeout(() => {
-        setSparkleEffects(prev => prev.filter(s => !secondWave.includes(s)));
+        setSparkleEffects((prev) =>
+          prev.filter((s) => !secondWave.includes(s))
+        );
       }, 3000);
     }, 2000);
-    
+
     // Final burst
     setTimeout(() => {
       const finalBurst = createSparkleWave(70, 50, 8);
-      setSparkleEffects(prev => [...prev, ...finalBurst]);
-      
+      setSparkleEffects((prev) => [...prev, ...finalBurst]);
+
       setTimeout(() => {
         setSparkleEffects([]);
         setCelebrationActive(false);
@@ -106,50 +142,55 @@ export function ThankYouPage({ onNavigate }: ThankYouPageProps) {
   // Trigger sparkles on successful actions
   const triggerActionSparkles = (centerX: number, centerY: number) => {
     const actionSparkles = createSparkleWave(centerX, centerY, 8);
-    setSparkleEffects(prev => [...prev, ...actionSparkles]);
-    
+    setSparkleEffects((prev) => [...prev, ...actionSparkles]);
+
     setTimeout(() => {
-      setSparkleEffects(prev => prev.filter(s => !actionSparkles.includes(s)));
+      setSparkleEffects((prev) =>
+        prev.filter((s) => !actionSparkles.includes(s))
+      );
     }, 2000);
   };
 
   useEffect(() => {
     const loadOrderData = async () => {
       try {
-        const orderId = localStorage.getItem('lastOrderId');
+        const orderId = localStorage.getItem("lastOrderId");
         if (orderId) {
           if (isDemoMode()) {
             // Create demo order data
             const demoOrder = {
               id: orderId,
               template: {
-                name: 'Premium Portfolio Template',
-                category: 'Portfolio',
-                rating: 4.9
+                name: "Premium Portfolio Template",
+                category: "Portfolio",
+                rating: 4.9,
               },
               customer: {
-                firstName: 'Demo',
-                lastName: 'User',
-                email: 'demo@example.com'
+                firstName: "Demo",
+                lastName: "User",
+                email: "demo@example.com",
               },
-              downloadToken: 'demo-token-' + Date.now()
+              downloadToken: "demo-token-" + Date.now(),
             };
             setOrderData(demoOrder);
-            
+
             // Start celebration after loading
             setTimeout(() => {
               startCelebration();
             }, 500);
           } else {
             // In a real app, this would make an API call
-            const response = await fetch(`${getServerUrl()}/orders/${orderId}`, {
-              headers: { 'Content-Type': 'application/json' }
-            });
+            const response = await fetch(
+              `${getServerUrl()}/orders/${orderId}`,
+              {
+                headers: { "Content-Type": "application/json" },
+              }
+            );
 
             if (response.ok) {
               const data = await response.json();
               setOrderData(data.order);
-              
+
               setTimeout(() => {
                 startCelebration();
               }, 500);
@@ -158,44 +199,44 @@ export function ThankYouPage({ onNavigate }: ThankYouPageProps) {
         } else {
           // No order ID, create fallback demo data
           const demoOrder = {
-            id: 'demo-order-' + Date.now(),
+            id: "demo-order-" + Date.now(),
             template: {
-              name: 'Modern Business Template',
-              category: 'Business',
-              rating: 4.8
+              name: "Modern Business Template",
+              category: "Business",
+              rating: 4.8,
             },
             customer: {
-              firstName: 'Welcome',
-              lastName: 'User',
-              email: 'user@readytolaunch.com'
+              firstName: "Welcome",
+              lastName: "User",
+              email: "user@readytolaunch.com",
             },
-            downloadToken: 'demo-token-fallback'
+            downloadToken: "demo-token-fallback",
           };
           setOrderData(demoOrder);
-          
+
           setTimeout(() => {
             startCelebration();
           }, 500);
         }
       } catch (error) {
-        console.error('Failed to load order data:', error);
+        console.error("Failed to load order data:", error);
         // Create fallback demo data on error
         const fallbackOrder = {
-          id: 'fallback-order',
+          id: "fallback-order",
           template: {
-            name: 'Premium Template',
-            category: 'Template',
-            rating: 4.7
+            name: "Premium Template",
+            category: "Template",
+            rating: 4.7,
           },
           customer: {
-            firstName: 'Valued',
-            lastName: 'Customer',
-            email: 'customer@readytolaunch.com'
+            firstName: "Valued",
+            lastName: "Customer",
+            email: "customer@readytolaunch.com",
           },
-          downloadToken: 'demo-fallback-token'
+          downloadToken: "demo-fallback-token",
         };
         setOrderData(fallbackOrder);
-        
+
         setTimeout(() => {
           startCelebration();
         }, 500);
@@ -209,21 +250,24 @@ export function ThankYouPage({ onNavigate }: ThankYouPageProps) {
 
   const handleDownload = async () => {
     if (!orderData?.downloadToken) return;
-    
+
     setDownloadStarted(true);
     triggerActionSparkles(50, 70); // Sparkles around download button
-    
+
     try {
       if (isDemoMode()) {
-        console.log('Demo download started for token:', orderData.downloadToken);
-        
+        console.log(
+          "Demo download started for token:",
+          orderData.downloadToken
+        );
+
         setTimeout(() => {
           setDownloadStarted(false);
           // Instead of alert, show a nice success message
           triggerActionSparkles(50, 50); // Success sparkles
-          
+
           // Create a temporary success message
-          const successElement = document.createElement('div');
+          const successElement = document.createElement("div");
           successElement.innerHTML = `
             <div style="
               position: fixed; 
@@ -250,28 +294,31 @@ export function ThankYouPage({ onNavigate }: ThankYouPageProps) {
             </style>
           `;
           document.body.appendChild(successElement);
-          
+
           setTimeout(() => {
             document.body.removeChild(successElement);
           }, 3000);
         }, 2000);
       } else {
-        const response = await fetch(`${getServerUrl()}/download/${orderData.downloadToken}`, {
-          headers: { 'Content-Type': 'application/json' }
-        });
+        const response = await fetch(
+          `${getServerUrl()}/download/${orderData.downloadToken}`,
+          {
+            headers: { "Content-Type": "application/json" },
+          }
+        );
 
         if (response.ok) {
           const data = await response.json();
-          console.log('Download URL:', data.downloadUrl);
+          console.log("Download URL:", data.downloadUrl);
           triggerActionSparkles(50, 50); // Success sparkles
-          
+
           setTimeout(() => {
             setDownloadStarted(false);
           }, 2000);
         }
       }
     } catch (error) {
-      console.error('Download failed:', error);
+      console.error("Download failed:", error);
       setDownloadStarted(false);
     }
   };
@@ -279,11 +326,11 @@ export function ThankYouPage({ onNavigate }: ThankYouPageProps) {
   const renderSparkleIcon = (type: string, size: number) => {
     const iconSize = Math.max(16, Math.min(32, size));
     switch (type) {
-      case 'star':
+      case "star":
         return <Star size={iconSize} className="fill-current" />;
-      case 'heart':
+      case "heart":
         return <Heart size={iconSize} className="fill-current" />;
-      case 'trophy':
+      case "trophy":
         return <Trophy size={iconSize} />;
       default:
         return <Sparkles size={iconSize} />;
@@ -313,7 +360,7 @@ export function ThankYouPage({ onNavigate }: ThankYouPageProps) {
             top: `${sparkle.y}%`,
             color: sparkle.color,
             filter: `drop-shadow(0 0 ${sparkle.size}px ${sparkle.color})`,
-            animation: `gamificationSparkle ${sparkle.duration}ms ease-out ${sparkle.delay}ms forwards`
+            animation: `gamificationSparkle ${sparkle.duration}ms ease-out ${sparkle.delay}ms forwards`,
           }}
         >
           {renderSparkleIcon(sparkle.type, sparkle.size)}
@@ -324,7 +371,10 @@ export function ThankYouPage({ onNavigate }: ThankYouPageProps) {
       {celebrationActive && (
         <div className="fixed inset-0 pointer-events-none z-20">
           <div className="absolute top-0 left-0 w-full h-3 bg-gradient-to-r from-yellow-400 via-red-500 via-pink-500 via-purple-500 via-blue-500 to-green-400 opacity-90 animate-pulse"></div>
-          <div className="absolute bottom-0 left-0 w-full h-3 bg-gradient-to-r from-orange-400 via-yellow-500 via-lime-500 via-green-500 to-teal-400 opacity-90 animate-pulse" style={{ animationDelay: '1s' }}></div>
+          <div
+            className="absolute bottom-0 left-0 w-full h-3 bg-gradient-to-r from-orange-400 via-yellow-500 via-lime-500 via-green-500 to-teal-400 opacity-90 animate-pulse"
+            style={{ animationDelay: "1s" }}
+          ></div>
         </div>
       )}
 
@@ -333,16 +383,21 @@ export function ThankYouPage({ onNavigate }: ThankYouPageProps) {
           {/* Success Header */}
           <div className="text-center mb-12">
             <div className="relative inline-block mb-8">
-              <div className={`w-28 h-28 bg-gradient-to-br from-primary/30 via-primary/20 to-primary/10 rounded-full flex items-center justify-center mx-auto transition-all duration-1000 ${celebrationActive ? 'animate-bounce scale-110' : 'scale-100'}`}>
+              <div
+                className={`w-28 h-28 bg-gradient-to-br from-primary/30 via-primary/20 to-primary/10 rounded-full flex items-center justify-center mx-auto transition-all duration-1000 ${
+                  celebrationActive ? "animate-bounce scale-110" : "scale-100"
+                }`}
+              >
                 <CheckCircle className="w-14 h-14 text-primary drop-shadow-2xl" />
               </div>
             </div>
-            
+
             <h1 className="text-5xl md:text-6xl font-bold text-foreground mb-4">
               🎉 SUCCESS! 🎉
             </h1>
             <p className="text-2xl text-muted-foreground max-w-2xl mx-auto">
-              Your premium template adventure begins now! {isDemoMode() && '(Demo)'}
+              Your premium template adventure begins now!{" "}
+              {isDemoMode() && "(Demo)"}
             </p>
           </div>
 
@@ -354,7 +409,9 @@ export function ThankYouPage({ onNavigate }: ThankYouPageProps) {
                 <h3 className="text-xl font-bold bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">
                   🎊 Welcome to Ready To Launch! 🎊
                 </h3>
-                <p className="text-muted-foreground">You've successfully joined our premium template family</p>
+                <p className="text-muted-foreground">
+                  You've successfully joined our premium template family
+                </p>
               </div>
               <Trophy className="w-8 h-8 text-primary animate-pulse" />
             </div>
@@ -363,7 +420,9 @@ export function ThankYouPage({ onNavigate }: ThankYouPageProps) {
           {/* Demo Mode Notice */}
           {isDemoMode() && (
             <Card className="p-4 mb-8 bg-blue-500/10 border-blue-500/20 text-center">
-              <Badge variant="outline" className="mb-2">Demo Mode</Badge>
+              <Badge variant="outline" className="mb-2">
+                Demo Mode
+              </Badge>
               <p className="text-sm text-muted-foreground">
                 This is a demonstration. No real charges were made.
               </p>
@@ -393,16 +452,27 @@ export function ThankYouPage({ onNavigate }: ThankYouPageProps) {
                     Your Premium Template
                   </h3>
                   <div className="bg-gradient-to-br from-muted/40 to-muted/20 rounded-xl p-6 border border-primary/10">
-                    <h4 className="font-bold text-xl mb-2">{orderData.template?.name || 'Premium Template'}</h4>
-                    <p className="text-muted-foreground mb-3">{orderData.template?.category}</p>
+                    <h4 className="font-bold text-xl mb-2">
+                      {orderData.template?.name || "Premium Template"}
+                    </h4>
+                    <p className="text-muted-foreground mb-3">
+                      {orderData.template?.category}
+                    </p>
                     <div className="flex items-center gap-2">
                       <div className="flex items-center gap-1">
                         {[...Array(5)].map((_, i) => (
-                          <Star key={i} className="w-4 h-4 text-yellow-500 fill-current" />
+                          <Star
+                            key={i}
+                            className="w-4 h-4 text-yellow-500 fill-current"
+                          />
                         ))}
                       </div>
-                      <span className="text-sm font-medium">{orderData.template?.rating || '4.9'}</span>
-                      <Badge variant="secondary" className="ml-2">Premium</Badge>
+                      <span className="text-sm font-medium">
+                        {orderData.template?.rating || "4.9"}
+                      </span>
+                      <Badge variant="secondary" className="ml-2">
+                        Premium
+                      </Badge>
                     </div>
                   </div>
                 </div>
@@ -415,9 +485,12 @@ export function ThankYouPage({ onNavigate }: ThankYouPageProps) {
                   </h3>
                   <div className="bg-gradient-to-br from-muted/40 to-muted/20 rounded-xl p-6 border border-primary/10">
                     <p className="font-bold text-lg">
-                      {orderData.customer?.firstName} {orderData.customer?.lastName}
+                      {orderData.customer?.firstName}{" "}
+                      {orderData.customer?.lastName}
                     </p>
-                    <p className="text-muted-foreground mb-3">{orderData.customer?.email}</p>
+                    <p className="text-muted-foreground mb-3">
+                      {orderData.customer?.email}
+                    </p>
                     <div className="flex items-center gap-2 text-sm text-primary">
                       <div className="w-2 h-2 bg-primary rounded-full animate-pulse"></div>
                       <span>Instant delivery activated!</span>
@@ -438,26 +511,28 @@ export function ThankYouPage({ onNavigate }: ThankYouPageProps) {
                     Your template files are waiting to create something amazing
                   </p>
                 </div>
-                
-                <Button 
-                  onClick={handleDownload} 
-                  size="lg" 
+
+                <Button
+                  onClick={handleDownload}
+                  size="lg"
                   className="bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary text-white px-12 py-6 text-xl font-bold rounded-2xl shadow-2xl hover:shadow-primary/25 transform hover:scale-105 transition-all duration-300 relative overflow-hidden"
                   disabled={downloadStarted}
                 >
                   {downloadStarted ? (
                     <>
                       <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-white mr-3"></div>
-                      {isDemoMode() ? 'Demo Processing...' : 'Preparing Download...'}
+                      {isDemoMode()
+                        ? "Demo Processing..."
+                        : "Preparing Download..."}
                     </>
                   ) : (
                     <>
                       <Download className="w-6 h-6 mr-3" />
-                      {isDemoMode() ? 'Demo Download' : 'Download Files'}
+                      {isDemoMode() ? "Demo Download" : "Download Files"}
                     </>
                   )}
                 </Button>
-                
+
                 <p className="text-sm text-muted-foreground mt-6">
                   Includes all source files, documentation, and assets
                 </p>
@@ -470,38 +545,44 @@ export function ThankYouPage({ onNavigate }: ThankYouPageProps) {
             <h2 className="text-2xl font-bold mb-6 text-center bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">
               Your Next Adventure Awaits!
             </h2>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {[
                 {
                   icon: FileText,
-                  title: 'Master the Docs',
-                  description: 'Setup and customization guide',
-                  color: 'text-blue-500'
+                  title: "Master the Docs",
+                  description: "Setup and customization guide",
+                  color: "text-blue-500",
                 },
                 {
                   icon: Rocket,
-                  title: 'Launch Your Site',
-                  description: 'Deploy your creation',
-                  color: 'text-primary'
+                  title: "Launch Your Site",
+                  description: "Deploy your creation",
+                  color: "text-primary",
                 },
                 {
                   icon: Heart,
-                  title: 'Join Community',
-                  description: 'Connect with creators',
-                  color: 'text-red-500'
-                }
+                  title: "Join Community",
+                  description: "Connect with creators",
+                  color: "text-red-500",
+                },
               ].map((item, index) => {
                 const IconComponent = item.icon;
                 return (
-                  <div 
-                    key={index} 
+                  <div
+                    key={index}
                     className="text-center p-6 hover:bg-primary/5 rounded-xl transition-all duration-300 cursor-pointer group hover:scale-105"
                     onClick={() => triggerActionSparkles(33 + index * 33, 85)}
                   >
-                    <IconComponent className={`w-12 h-12 ${item.color} mx-auto mb-4 drop-shadow-lg group-hover:scale-110 transition-transform`} />
-                    <h3 className="font-bold mb-2 group-hover:text-primary transition-colors">{item.title}</h3>
-                    <p className="text-sm text-muted-foreground">{item.description}</p>
+                    <IconComponent
+                      className={`w-12 h-12 ${item.color} mx-auto mb-4 drop-shadow-lg group-hover:scale-110 transition-transform`}
+                    />
+                    <h3 className="font-bold mb-2 group-hover:text-primary transition-colors">
+                      {item.title}
+                    </h3>
+                    <p className="text-sm text-muted-foreground">
+                      {item.description}
+                    </p>
                   </div>
                 );
               })}
@@ -521,23 +602,23 @@ export function ThankYouPage({ onNavigate }: ThankYouPageProps) {
 
           {/* Action Buttons */}
           <div className="flex flex-col sm:flex-row gap-6 justify-center">
-            <Button 
+            <Button
               onClick={() => {
-                onNavigate('templates');
+                onNavigate("templates");
                 triggerActionSparkles(30, 95);
-              }} 
-              variant="outline" 
+              }}
+              variant="outline"
               size="lg"
               className="border-primary/40 hover:border-primary text-primary hover:bg-primary/10 font-semibold px-8 py-4 rounded-xl transition-all duration-300 hover:scale-105"
             >
               <Star className="w-5 h-5 mr-2" />
               Explore More Templates
             </Button>
-            <Button 
+            <Button
               onClick={() => {
-                onNavigate('how-to-launch');
+                onNavigate("how-to-launch");
                 triggerActionSparkles(70, 95);
-              }} 
+              }}
               size="lg"
               className="bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary text-white font-bold px-8 py-4 rounded-xl shadow-lg hover:shadow-primary/25 transition-all duration-300 hover:scale-105"
             >
@@ -550,8 +631,9 @@ export function ThankYouPage({ onNavigate }: ThankYouPageProps) {
       </div>
 
       {/* Add custom CSS for gamification sparkles */}
-      <style dangerouslySetInnerHTML={{
-        __html: `
+      <style
+        dangerouslySetInnerHTML={{
+          __html: `
           @keyframes gamificationSparkle {
             0% {
               opacity: 0;
@@ -570,8 +652,9 @@ export function ThankYouPage({ onNavigate }: ThankYouPageProps) {
               transform: translateY(-50px) scale(0.3) rotate(360deg);
             }
           }
-        `
-      }} />
+        `,
+        }}
+      />
     </div>
   );
 }

@@ -1,19 +1,9 @@
-import React, { useState, Suspense, lazy } from "react";
+import { useState, Suspense, lazy } from "react";
 import { ErrorBoundary } from "./components/ErrorBoundary";
-
-// Browser environment compatibility polyfill
-if (typeof globalThis !== "undefined" && !globalThis.process) {
-  globalThis.process = { env: {} } as any;
-}
 
 // Optimized lazy loading - load only when needed
 const HomePage = lazy(() =>
   import("./components/pages/HomePage").then((m) => ({ default: m.HomePage }))
-);
-const ThankYouPage = lazy(() =>
-  import("./components/pages/ThankYouPage").then((m) => ({
-    default: m.ThankYouPage,
-  }))
 );
 const CaseStudyPage = lazy(() =>
   import("./components/pages/CaseStudyPage").then((m) => ({
@@ -84,8 +74,6 @@ export default function App() {
 
   const renderPage = () => {
     switch (currentPage) {
-      case "thank-you":
-        return <ThankYouPage onNavigate={handleNavigation} />;
       case "case-study":
         return (
           <CaseStudyPage

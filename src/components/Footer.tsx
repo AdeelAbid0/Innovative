@@ -1,10 +1,23 @@
-import React from 'react';
-import { Button } from './ui/button';
-import { Logo } from './Logo';
-import { Separator } from './ui/separator';
-import { ArrowRight, Mail, MapPin, Phone, Globe, Heart, Code, Linkedin, Twitter, Facebook, Instagram, Github } from 'lucide-react';
+import { Logo } from "./Logo";
+import { Separator } from "./ui/separator";
+import {
+  Heart,
+  Code,
+  Linkedin,
+  Twitter,
+  Facebook,
+  Instagram,
+  Github,
+} from "lucide-react";
 
-type Page = 'home' | 'about' | 'services' | 'products' | 'contact' | 'thank-you';
+type Page =
+  | "home"
+  | "about"
+  | "services"
+  | "work"
+  | "contact"
+  | "thank-you"
+  | "case-study";
 
 interface FooterProps {
   onNavigate: (page: Page) => void;
@@ -14,54 +27,38 @@ export function Footer({ onNavigate }: FooterProps) {
   const currentYear = new Date().getFullYear();
 
   const quickLinks = [
-    { label: 'About Us', page: 'about' as Page },
-    { label: 'Services', page: 'services' as Page },
-    { label: 'Products', page: 'products' as Page },
-    { label: 'Contact', page: 'contact' as Page },
+    { label: "About Us", page: "about" as Page },
+    { label: "Services", page: "services" as Page },
+    { label: "Portfolio", page: "work" as Page },
+    { label: "Contact", page: "contact" as Page },
   ];
 
   const services = [
-    { label: 'Web Development', href: '#' },
-    { label: 'Mobile Apps', href: '#' },
-    { label: 'Cloud Solutions', href: '#' },
-    { label: 'AI Development', href: '#' },
+    { label: "Web Development", href: "#" },
+    { label: "Mobile Apps", href: "#" },
+    { label: "Cloud Solutions", href: "#" },
+    { label: "AI Development", href: "#" },
   ];
-
-  const handleEmailSubscription = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const formData = new FormData(e.currentTarget);
-    const email = formData.get('email') as string;
-    
-    if (email) {
-      // Simple email validation
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (emailRegex.test(email)) {
-        // Here you would typically send to your email service
-        console.log('Email subscription:', email);
-        alert('Thank you for subscribing! You will receive updates about our latest developments.');
-        (e.target as HTMLFormElement).reset();
-      } else {
-        alert('Please enter a valid email address.');
-      }
-    }
-  };
 
   return (
     <footer className="bg-[#1a1a1a] border-t border-white/10">
       <div className="max-w-7xl mx-auto px-6 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
-          
           {/* Company Info */}
           <div className="space-y-4">
-            <div onClick={() => onNavigate('home')} className="cursor-pointer inline-block">
+            <div
+              onClick={() => onNavigate("home")}
+              className="cursor-pointer inline-block"
+            >
               <Logo size="md" showText={true} />
             </div>
-            
+
             <p className="text-muted-foreground text-sm leading-relaxed">
-              Nexus Core is a leading software development company specializing in custom solutions, 
-              mobile applications, and cutting-edge technology implementations.
+              Nexus Core is a leading software development company specializing
+              in custom solutions, mobile applications, and cutting-edge
+              technology implementations.
             </p>
-            
+
             <div className="flex items-center gap-4 text-xs text-muted-foreground">
               <div className="flex items-center gap-1">
                 <Code className="w-3 h-3 text-primary" />
@@ -112,7 +109,7 @@ export function Footer({ onNavigate }: FooterProps) {
             <p className="text-muted-foreground text-sm">
               Follow us on social media for updates and insights.
             </p>
-            
+
             <div className="flex flex-wrap gap-3">
               <a
                 href="https://linkedin.com"
@@ -169,7 +166,7 @@ export function Footer({ onNavigate }: FooterProps) {
         <div className="flex flex-col md:flex-row justify-between items-center gap-4">
           <div className="flex flex-col md:flex-row items-center gap-4 text-sm text-muted-foreground">
             <p>&copy; {currentYear} Nexus Core. All rights reserved.</p>
-            
+
             <div className="flex items-center gap-6">
               <a href="#" className="hover:text-foreground transition-colors">
                 Privacy Policy

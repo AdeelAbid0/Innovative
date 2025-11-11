@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from "react";
+import type { ReactNode } from "react";
 
 interface UseOptimizedScrollAnimationOptions {
   threshold?: number;
@@ -10,11 +11,11 @@ export function useOptimizedScrollAnimation(
   options: UseOptimizedScrollAnimationOptions = {}
 ) {
   const [isVisible, setIsVisible] = useState(false);
-  const elementRef = useRef<HTMLElement>(null);
+  const elementRef = useRef<HTMLDivElement>(null);
   const {
     threshold = 0.1,
-    rootMargin = '0px 0px -50px 0px',
-    once = true
+    rootMargin = "0px 0px -50px 0px",
+    once = true,
   } = options;
 
   useEffect(() => {
@@ -23,7 +24,7 @@ export function useOptimizedScrollAnimation(
 
     // Use requestIdleCallback for better performance
     const scheduleAnimation = (callback: () => void) => {
-      if ('requestIdleCallback' in window) {
+      if ("requestIdleCallback" in window) {
         window.requestIdleCallback(callback, { timeout: 100 });
       } else {
         requestAnimationFrame(callback);
@@ -62,13 +63,13 @@ export function useOptimizedScrollAnimation(
 }
 
 // Simple component wrapper for scroll animations
-export function ScrollFadeIn({ 
-  children, 
-  className = '',
+export function ScrollFadeIn({
+  children,
+  className = "",
   delay = 0,
-  ...options 
+  ...options
 }: {
-  children: React.ReactNode;
+  children: ReactNode;
   className?: string;
   delay?: number;
 } & UseOptimizedScrollAnimationOptions) {
@@ -77,7 +78,7 @@ export function ScrollFadeIn({
   return (
     <div
       ref={elementRef}
-      className={`scroll-fade-in ${isVisible ? 'visible' : ''} ${className}`}
+      className={`scroll-fade-in ${isVisible ? "visible" : ""} ${className}`}
       style={{ transitionDelay: `${delay}ms` }}
     >
       {children}

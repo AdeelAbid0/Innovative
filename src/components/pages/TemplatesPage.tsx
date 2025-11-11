@@ -1,60 +1,88 @@
-import React, { useState, useEffect } from 'react';
-import { Button } from '../ui/button';
-import { Badge } from '../ui/badge';
-import { Card } from '../ui/card';
-import { Input } from '../ui/input';
-import { 
-  Search, Star, Eye, ShoppingCart, ArrowRight,
-  Download, Users, TrendingUp, Heart
-} from 'lucide-react';
-import { getAllTemplates, Template, formatPrice } from '../data/TemplateData';
-import { ImageWithFallback } from '../figma/ImageWithFallback';
-import { CompactBuyButton } from '../GumroadIntegration';
+import { useState, useEffect } from "react";
+import { Button } from "../ui/button";
+import { Badge } from "../ui/badge";
+import { Card } from "../ui/card";
+import { Input } from "../ui/input";
+import {
+  Search,
+  Star,
+  Eye,
+  ShoppingCart,
+  ArrowRight,
+  Download,
+  Users,
+  TrendingUp,
+  Heart,
+} from "lucide-react";
+import { getAllTemplates, formatPrice } from "../data/TemplateData";
+import type { Template } from "../data/TemplateData";
+import { ImageWithFallback } from "../figma/ImageWithFallback";
+import { CompactBuyButton } from "../GumroadIntegration";
 
-type Page = 'home' | 'templates' | 'template-detail' | 'how-to-launch' | 'custom-web' | 'thank-you' | 'checkout' | 'admin';
+type Page =
+  | "home"
+  | "templates"
+  | "template-detail"
+  | "how-to-launch"
+  | "custom-web"
+  | "thank-you"
+  | "checkout"
+  | "admin";
 
 interface TemplatesPageProps {
   onNavigate: (page: Page) => void;
   onSelectTemplate: (templateId: string) => void;
 }
 
-export function TemplatesPage({ onNavigate, onSelectTemplate }: TemplatesPageProps) {
+export function TemplatesPage({
+  onNavigate,
+  onSelectTemplate,
+}: TemplatesPageProps) {
   const [allTemplates] = useState<Template[]>(getAllTemplates());
-  const [filteredTemplates, setFilteredTemplates] = useState<Template[]>(allTemplates);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('All');
+  const [filteredTemplates, setFilteredTemplates] =
+    useState<Template[]>(allTemplates);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("All");
 
   // Figma demo URL for all previews
-  const FIGMA_DEMO_URL = 'https://clap-handle-87301877.figma.site';
+  const FIGMA_DEMO_URL = "https://clap-handle-87301877.figma.site";
 
   const handlePreviewClick = (e: React.MouseEvent) => {
     e.stopPropagation();
-    window.open(FIGMA_DEMO_URL, '_blank', 'noopener,noreferrer');
+    window.open(FIGMA_DEMO_URL, "_blank", "noopener,noreferrer");
   };
 
   const handleTemplateSelect = (templateId: string) => {
     onSelectTemplate(templateId);
-    onNavigate('template-detail');
+    onNavigate("template-detail");
   };
 
   // Get unique categories for simple filtering
-  const categories = ['All', ...Array.from(new Set(allTemplates.map(t => t.category)))];
+  const categories = [
+    "All",
+    ...Array.from(new Set(allTemplates.map((t) => t.category))),
+  ];
 
   // Simple filter logic
   useEffect(() => {
     let filtered = allTemplates;
 
     // Filter by category
-    if (selectedCategory !== 'All') {
-      filtered = filtered.filter(template => template.category === selectedCategory);
+    if (selectedCategory !== "All") {
+      filtered = filtered.filter(
+        (template) => template.category === selectedCategory
+      );
     }
 
     // Filter by search query
     if (searchQuery) {
-      filtered = filtered.filter(template =>
-        template.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        template.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        template.category.toLowerCase().includes(searchQuery.toLowerCase())
+      filtered = filtered.filter(
+        (template) =>
+          template.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          template.description
+            .toLowerCase()
+            .includes(searchQuery.toLowerCase()) ||
+          template.category.toLowerCase().includes(searchQuery.toLowerCase())
       );
     }
 
@@ -69,11 +97,10 @@ export function TemplatesPage({ onNavigate, onSelectTemplate }: TemplatesPagePro
       {/* Minimal Hero Section */}
       <section className="py-20 bg-background">
         <div className="max-w-6xl mx-auto px-6 text-center">
-          <h1 className="text-mega text-foreground mb-4">
-            Website Templates
-          </h1>
+          <h1 className="text-mega text-foreground mb-4">Website Templates</h1>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-12">
-            Choose from our collection of professional templates and launch your website in minutes.
+            Choose from our collection of professional templates and launch your
+            website in minutes.
           </p>
 
           {/* Simple Search */}
@@ -97,15 +124,15 @@ export function TemplatesPage({ onNavigate, onSelectTemplate }: TemplatesPagePro
                 key={category}
                 onClick={() => setSelectedCategory(category)}
                 className={`px-6 py-2 rounded-full text-sm font-medium transition-all ${
-                  selectedCategory === category 
-                    ? 'bg-primary text-primary-foreground' 
-                    : 'bg-card hover:bg-muted text-muted-foreground hover:text-foreground'
+                  selectedCategory === category
+                    ? "bg-primary text-primary-foreground"
+                    : "bg-card hover:bg-muted text-muted-foreground hover:text-foreground"
                 }`}
               >
                 {category}
-                {category !== 'All' && (
+                {category !== "All" && (
                   <span className="ml-2 text-xs opacity-70">
-                    {allTemplates.filter(t => t.category === category).length}
+                    {allTemplates.filter((t) => t.category === category).length}
                   </span>
                 )}
               </button>
@@ -114,7 +141,8 @@ export function TemplatesPage({ onNavigate, onSelectTemplate }: TemplatesPagePro
 
           {/* Results Count */}
           <div className="text-sm text-muted-foreground mb-8">
-            {filteredTemplates.length} template{filteredTemplates.length !== 1 ? 's' : ''} found
+            {filteredTemplates.length} template
+            {filteredTemplates.length !== 1 ? "s" : ""} found
           </div>
         </div>
       </section>
@@ -127,14 +155,16 @@ export function TemplatesPage({ onNavigate, onSelectTemplate }: TemplatesPagePro
               <div className="w-24 h-24 bg-muted/30 rounded-full flex items-center justify-center mx-auto mb-6">
                 <Search className="w-12 h-12 text-muted-foreground" />
               </div>
-              <h3 className="text-xl font-semibold text-foreground mb-4">No templates found</h3>
+              <h3 className="text-xl font-semibold text-foreground mb-4">
+                No templates found
+              </h3>
               <p className="text-muted-foreground mb-8 max-w-md mx-auto">
                 Try adjusting your search or browse all categories
               </p>
-              <Button 
+              <Button
                 onClick={() => {
-                  setSearchQuery('');
-                  setSelectedCategory('All');
+                  setSearchQuery("");
+                  setSelectedCategory("All");
                 }}
                 variant="outline"
                 className="border-primary/40 hover:border-primary text-primary hover:bg-primary/10"
@@ -145,8 +175,8 @@ export function TemplatesPage({ onNavigate, onSelectTemplate }: TemplatesPagePro
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {filteredTemplates.map((template, index) => (
-                <Card 
-                  key={template.id} 
+                <Card
+                  key={template.id}
                   className="bg-card border-white/10 overflow-hidden hover:border-primary/30 transition-all duration-300 hover:scale-[1.02] group cursor-pointer"
                   onClick={() => handleTemplateSelect(template.id)}
                   style={{ animationDelay: `${index * 100}ms` }}
@@ -158,7 +188,7 @@ export function TemplatesPage({ onNavigate, onSelectTemplate }: TemplatesPagePro
                       alt={template.title}
                       className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                     />
-                    
+
                     {/* Overlay on Hover */}
                     <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                       <div className="flex gap-3">
@@ -249,7 +279,10 @@ export function TemplatesPage({ onNavigate, onSelectTemplate }: TemplatesPagePro
                         ({template.reviews})
                       </span>
                       <div className="flex-1" />
-                      <Badge variant="outline" className="text-xs border-primary/30 text-primary">
+                      <Badge
+                        variant="outline"
+                        className="text-xs border-primary/30 text-primary"
+                      >
                         {template.difficulty}
                       </Badge>
                     </div>
@@ -270,11 +303,11 @@ export function TemplatesPage({ onNavigate, onSelectTemplate }: TemplatesPagePro
                         <Eye className="w-4 h-4 mr-2" />
                         Preview
                       </Button>
-                      
+
                       {/* Gumroad Purchase Button */}
                       {template.gumroadUrl ? (
                         <div onClick={(e) => e.stopPropagation()}>
-                          <CompactBuyButton 
+                          <CompactBuyButton
                             productUrl={template.gumroadUrl}
                             price={formatPrice(template.price)}
                           />
@@ -286,7 +319,7 @@ export function TemplatesPage({ onNavigate, onSelectTemplate }: TemplatesPagePro
                           onClick={(e) => {
                             e.stopPropagation();
                             onSelectTemplate(template.id);
-                            onNavigate('checkout');
+                            onNavigate("checkout");
                           }}
                         >
                           <ShoppingCart className="w-4 h-4 mr-2" />
@@ -308,18 +341,26 @@ export function TemplatesPage({ onNavigate, onSelectTemplate }: TemplatesPagePro
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             <div>
               <Download className="w-8 h-8 text-primary mx-auto mb-3" />
-              <div className="text-2xl font-bold text-foreground mb-1">10K+</div>
+              <div className="text-2xl font-bold text-foreground mb-1">
+                10K+
+              </div>
               <div className="text-sm text-muted-foreground">Downloads</div>
             </div>
             <div>
               <Users className="w-8 h-8 text-primary mx-auto mb-3" />
-              <div className="text-2xl font-bold text-foreground mb-1">2.5K+</div>
-              <div className="text-sm text-muted-foreground">Happy Customers</div>
+              <div className="text-2xl font-bold text-foreground mb-1">
+                2.5K+
+              </div>
+              <div className="text-sm text-muted-foreground">
+                Happy Customers
+              </div>
             </div>
             <div>
               <Star className="w-8 h-8 text-primary mx-auto mb-3" />
               <div className="text-2xl font-bold text-foreground mb-1">4.9</div>
-              <div className="text-sm text-muted-foreground">Average Rating</div>
+              <div className="text-sm text-muted-foreground">
+                Average Rating
+              </div>
             </div>
             <div>
               <TrendingUp className="w-8 h-8 text-primary mx-auto mb-3" />
@@ -337,12 +378,13 @@ export function TemplatesPage({ onNavigate, onSelectTemplate }: TemplatesPagePro
             Need Something Custom?
           </h2>
           <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-            Can't find the perfect template? Let our expert team build a custom website tailored to your specific needs.
+            Can't find the perfect template? Let our expert team build a custom
+            website tailored to your specific needs.
           </p>
-          <Button 
-            size="lg" 
+          <Button
+            size="lg"
             className="btn-premium px-8 py-4 text-lg"
-            onClick={() => onNavigate('custom-web')}
+            onClick={() => onNavigate("custom-web")}
           >
             Request Custom Website
             <ArrowRight className="w-5 h-5 ml-2" />

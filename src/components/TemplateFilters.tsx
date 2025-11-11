@@ -1,6 +1,5 @@
-import React from 'react';
-import { Search, X } from 'lucide-react';
-import { categories, getAllTemplates } from './data/TemplateData';
+import { Search, X } from "lucide-react";
+import { categories, getAllTemplates } from "./data/TemplateData";
 
 interface TemplateFiltersProps {
   selectedCategory: string;
@@ -15,16 +14,17 @@ export function TemplateFilters({
   setSelectedCategory,
   searchQuery,
   setSearchQuery,
-  filteredCount
+  filteredCount,
 }: TemplateFiltersProps) {
   const allTemplates = getAllTemplates();
-  
+
   // Get count for each category
   const getCategoryCount = (category: string) => {
-    if (category === 'All') {
+    if (category === "All") {
       return allTemplates.length;
     }
-    return allTemplates.filter(template => template.category === category).length;
+    return allTemplates.filter((template) => template.category === category)
+      .length;
   };
 
   return (
@@ -40,18 +40,21 @@ export function TemplateFilters({
                 className={`
                   flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-all duration-200
                   whitespace-nowrap min-w-fit
-                  ${selectedCategory === category
-                    ? 'bg-primary text-primary-foreground shadow-lg'
-                    : 'bg-card text-muted-foreground hover:text-foreground hover:bg-card/80'
+                  ${
+                    selectedCategory === category
+                      ? "bg-primary text-primary-foreground shadow-lg"
+                      : "bg-card text-muted-foreground hover:text-foreground hover:bg-card/80"
                   }
                 `}
               >
                 {category}
-                <span className={`ml-2 text-xs px-1.5 py-0.5 rounded-full ${
-                  selectedCategory === category
-                    ? 'bg-primary-foreground/20'
-                    : 'bg-primary/10 text-primary'
-                }`}>
+                <span
+                  className={`ml-2 text-xs px-1.5 py-0.5 rounded-full ${
+                    selectedCategory === category
+                      ? "bg-primary-foreground/20"
+                      : "bg-primary/10 text-primary"
+                  }`}
+                >
                   {getCategoryCount(category)}
                 </span>
               </button>
@@ -64,12 +67,13 @@ export function TemplateFilters({
       <div className="flex items-center justify-center gap-4">
         {/* Results count */}
         <div className="text-sm text-muted-foreground">
-          <span className="font-semibold text-foreground">{filteredCount}</span> templates
+          <span className="font-semibold text-foreground">{filteredCount}</span>{" "}
+          templates
           {searchQuery && (
             <span className="ml-2 inline-flex items-center gap-1 bg-primary/10 text-primary px-2 py-1 rounded-full text-xs">
               "{searchQuery}"
               <button
-                onClick={() => setSearchQuery('')}
+                onClick={() => setSearchQuery("")}
                 className="hover:bg-primary/20 rounded-full p-0.5"
               >
                 <X className="w-3 h-3" />
@@ -77,13 +81,13 @@ export function TemplateFilters({
             </span>
           )}
         </div>
-        
+
         {/* Clear all filters */}
-        {(searchQuery || selectedCategory !== 'All') && (
+        {(searchQuery || selectedCategory !== "All") && (
           <button
             onClick={() => {
-              setSearchQuery('');
-              setSelectedCategory('All');
+              setSearchQuery("");
+              setSelectedCategory("All");
             }}
             className="text-xs text-primary hover:text-primary/80 font-medium"
           >
@@ -95,7 +99,10 @@ export function TemplateFilters({
   );
 }
 
-export function TemplateSearch({ searchQuery, setSearchQuery }: {
+export function TemplateSearch({
+  searchQuery,
+  setSearchQuery,
+}: {
   searchQuery: string;
   setSearchQuery: (query: string) => void;
 }) {
@@ -105,7 +112,7 @@ export function TemplateSearch({ searchQuery, setSearchQuery }: {
         <div className="flex items-center px-6 py-4">
           {/* Search Icon - Gray color on left */}
           <Search className="w-5 h-5 text-[#888888] mr-4 flex-shrink-0" />
-          
+
           {/* Search Input - Full width with proper styling */}
           <input
             type="text"

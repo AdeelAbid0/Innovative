@@ -1,6 +1,4 @@
 // Simple test component for debugging build issues
-import React from 'react';
-
 export default function TestApp() {
   return (
     <div className="size-full flex items-center justify-center bg-[#212121] text-white">

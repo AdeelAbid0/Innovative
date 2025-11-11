@@ -142,19 +142,11 @@ export function HomePage({ onNavigate }: HomePageProps) {
     threshold: 0.2,
     triggerOnce: true,
   });
-  const coreValuesAnimation = useStaggeredAnimation(4, {
-    threshold: 0.2,
-    triggerOnce: true,
-  });
+
   const caseStudiesAnimation = useStaggeredAnimation(3, {
     threshold: 0.2,
     triggerOnce: true,
   });
-  const contactMethodsAnimation = useStaggeredAnimation(3, {
-    threshold: 0.2,
-    triggerOnce: true,
-  });
-
   const services = [
     {
       icon: Code,

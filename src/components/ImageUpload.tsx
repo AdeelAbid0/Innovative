@@ -1,10 +1,16 @@
-import React, { useState, useRef, useCallback } from 'react';
-import { Button } from './ui/button';
-import { Card, CardContent } from './ui/card';
-import { 
-  Upload, X, Image as ImageIcon, Check, AlertCircle, 
-  Camera, Link, Download, Trash2, CheckCircle
-} from 'lucide-react';
+import React, { useState, useRef, useCallback } from "react";
+import { Button } from "./ui/button";
+import { Card, CardContent } from "./ui/card";
+import {
+  Upload,
+  Image as ImageIcon,
+  Check,
+  AlertCircle,
+  Camera,
+  Link,
+  Trash2,
+  CheckCircle,
+} from "lucide-react";
 
 interface ImageUploadProps {
   onImageChange: (imageUrl: string) => void;
@@ -12,78 +18,84 @@ interface ImageUploadProps {
   className?: string;
 }
 
-export function ImageUpload({ onImageChange, currentImage, className = '' }: ImageUploadProps) {
+export function ImageUpload({
+  onImageChange,
+  currentImage,
+  className = "",
+}: ImageUploadProps) {
   const [isDragging, setIsDragging] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
   const [uploadError, setUploadError] = useState<string | null>(null);
   const [uploadSuccess, setUploadSuccess] = useState(false);
-  const [imagePreview, setImagePreview] = useState<string>(currentImage || '');
-  const [urlInput, setUrlInput] = useState('');
+  const [imagePreview, setImagePreview] = useState<string>(currentImage || "");
+  const [urlInput, setUrlInput] = useState("");
   const [showUrlInput, setShowUrlInput] = useState(false);
-  
+
   const fileInputRef = useRef<HTMLInputElement>(null);
   const dragCounter = useRef(0);
 
   const validateImage = (file: File): string | null => {
     // Check file type
-    if (!file.type.startsWith('image/')) {
-      return 'Please select a valid image file (PNG, JPG, GIF, WebP)';
+    if (!file.type.startsWith("image/")) {
+      return "Please select a valid image file (PNG, JPG, GIF, WebP)";
     }
 
     // Check file size (max 10MB - increased for better quality)
     if (file.size > 10 * 1024 * 1024) {
-      return 'Image file size must be less than 10MB';
+      return "Image file size must be less than 10MB";
     }
 
     return null;
   };
 
-  const handleFileUpload = useCallback(async (file: File) => {
-    const error = validateImage(file);
-    if (error) {
-      setUploadError(error);
+  const handleFileUpload = useCallback(
+    async (file: File) => {
+      const error = validateImage(file);
+      if (error) {
+        setUploadError(error);
+        setUploadSuccess(false);
+        return;
+      }
+
+      setIsUploading(true);
+      setUploadError(null);
       setUploadSuccess(false);
-      return;
-    }
 
-    setIsUploading(true);
-    setUploadError(null);
-    setUploadSuccess(false);
+      try {
+        // Create a data URL from the uploaded file
+        const reader = new FileReader();
 
-    try {
-      // Create a data URL from the uploaded file
-      const reader = new FileReader();
-      
-      reader.onload = (e) => {
-        const result = e.target?.result as string;
-        if (result) {
-          // Use the actual uploaded image data
-          setImagePreview(result);
-          onImageChange(result);
-          setUploadSuccess(true);
-          
-          // Clear success message after 3 seconds
-          setTimeout(() => setUploadSuccess(false), 3000);
-        }
-        setIsUploading(false);
-      };
+        reader.onload = (e) => {
+          const result = e.target?.result as string;
+          if (result) {
+            // Use the actual uploaded image data
+            setImagePreview(result);
+            onImageChange(result);
+            setUploadSuccess(true);
 
-      reader.onerror = () => {
-        setUploadError('Failed to read the image file. Please try again.');
+            // Clear success message after 3 seconds
+            setTimeout(() => setUploadSuccess(false), 3000);
+          }
+          setIsUploading(false);
+        };
+
+        reader.onerror = () => {
+          setUploadError("Failed to read the image file. Please try again.");
+          setUploadSuccess(false);
+          setIsUploading(false);
+        };
+
+        // Read the file as data URL (base64)
+        reader.readAsDataURL(file);
+      } catch (error) {
+        setUploadError("Failed to process image. Please try again.");
         setUploadSuccess(false);
         setIsUploading(false);
-      };
-
-      // Read the file as data URL (base64)
-      reader.readAsDataURL(file);
-      
-    } catch (error) {
-      setUploadError('Failed to process image. Please try again.');
-      setUploadSuccess(false);
-      setIsUploading(false);
-      console.error('Upload error:', error);
-    }
-  }, [onImageChange]);
+        console.error("Upload error:", error);
+      }
+    },
+    [onImageChange]
+  );
 
   const handleDragEnter = useCallback((e: React.DragEvent) => {
     e.preventDefault();
@@ -108,65 +120,72 @@ export function ImageUpload({ onImageChange, currentImage, className = '' }: Ima
     e.stopPropagation();
   }, []);
 
-  const handleDrop = useCallback((e: React.DragEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setIsDragging(false);
-    dragCounter.current = 0;
+  const handleDrop = useCallback(
+    (e: React.DragEvent) => {
+      e.preventDefault();
+      e.stopPropagation();
+      setIsDragging(false);
+      dragCounter.current = 0;
 
-    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
-      handleFileUpload(e.dataTransfer.files[0]);
-    }
-  }, [handleFileUpload]);
+      if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+        handleFileUpload(e.dataTransfer.files[0]);
+      }
+    },
+    [handleFileUpload]
+  );
 
-  const handleFileSelect = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      handleFileUpload(e.target.files[0]);
-    }
-  }, [handleFileUpload]);
+  const handleFileSelect = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      if (e.target.files && e.target.files[0]) {
+        handleFileUpload(e.target.files[0]);
+      }
+    },
+    [handleFileUpload]
+  );
 
   const handleUrlSubmit = () => {
     if (!urlInput) return;
-    
+
     try {
       new URL(urlInput); // Validate URL
-      
+
       // Test if the URL is actually an image by trying to load it
       const img = new Image();
       img.onload = () => {
         setImagePreview(urlInput);
         onImageChange(urlInput);
-        setUrlInput('');
+        setUrlInput("");
         setShowUrlInput(false);
         setUploadError(null);
         setUploadSuccess(true);
-        
+
         // Clear success message after 3 seconds
         setTimeout(() => setUploadSuccess(false), 3000);
       };
-      
+
       img.onerror = () => {
-        setUploadError('Unable to load image from the provided URL. Please check the URL and try again.');
+        setUploadError(
+          "Unable to load image from the provided URL. Please check the URL and try again."
+        );
         setUploadSuccess(false);
       };
-      
+
       img.src = urlInput;
-      
     } catch {
-      setUploadError('Please enter a valid image URL');
+      setUploadError("Please enter a valid image URL");
       setUploadSuccess(false);
     }
   };
 
   const clearImage = () => {
-    setImagePreview('');
-    onImageChange('');
+    setImagePreview("");
+    onImageChange("");
     setUploadError(null);
     setUploadSuccess(false);
-    setUrlInput('');
+    setUrlInput("");
     setShowUrlInput(false);
     if (fileInputRef.current) {
-      fileInputRef.current.value = '';
+      fileInputRef.current.value = "";
     }
   };
 
@@ -184,16 +203,17 @@ export function ImageUpload({ onImageChange, currentImage, className = '' }: Ima
         Template Thumbnail
         <span className="text-xs text-muted-foreground">(Required)</span>
       </label>
-      
+
       {/* Main Upload Area */}
-      <Card className={`
+      <Card
+        className={`
         bg-[#1a1a1a] border-white/20 transition-all duration-300
-        ${isDragging ? 'border-primary bg-primary/5' : ''}
-        ${uploadError ? 'border-red-500/50' : ''}
-        ${uploadSuccess ? 'border-primary bg-primary/5' : ''}
-      `}>
+        ${isDragging ? "border-primary bg-primary/5" : ""}
+        ${uploadError ? "border-red-500/50" : ""}
+        ${uploadSuccess ? "border-primary bg-primary/5" : ""}
+      `}
+      >
         <CardContent className="p-6">
-          
           {/* Success Message */}
           {uploadSuccess && (
             <div className="mb-4 p-3 bg-primary/10 border border-primary/20 rounded-lg">
@@ -213,8 +233,10 @@ export function ImageUpload({ onImageChange, currentImage, className = '' }: Ima
                   alt="Template thumbnail preview"
                   className="w-full h-48 object-cover"
                   onError={() => {
-                    setUploadError('Failed to load image. Please try another one.');
-                    setImagePreview('');
+                    setUploadError(
+                      "Failed to load image. Please try another one."
+                    );
+                    setImagePreview("");
                     setUploadSuccess(false);
                   }}
                 />
@@ -231,7 +253,7 @@ export function ImageUpload({ onImageChange, currentImage, className = '' }: Ima
                   </Button>
                 </div>
               </div>
-              
+
               {/* Image Info */}
               <div className="mt-2 text-xs text-muted-foreground">
                 <p>✓ Image loaded successfully - Click to replace or remove</p>
@@ -243,12 +265,17 @@ export function ImageUpload({ onImageChange, currentImage, className = '' }: Ima
           <div
             className={`
               border-2 border-dashed rounded-lg p-8 text-center transition-all duration-300
-              ${isDragging 
-                ? 'border-primary bg-primary/5' 
-                : 'border-white/20 hover:border-white/40'
+              ${
+                isDragging
+                  ? "border-primary bg-primary/5"
+                  : "border-white/20 hover:border-white/40"
               }
-              ${isUploading ? 'pointer-events-none opacity-70' : 'cursor-pointer'}
-              ${uploadSuccess ? 'border-primary/50 bg-primary/5' : ''}
+              ${
+                isUploading
+                  ? "pointer-events-none opacity-70"
+                  : "cursor-pointer"
+              }
+              ${uploadSuccess ? "border-primary/50 bg-primary/5" : ""}
             `}
             onDragEnter={handleDragEnter}
             onDragLeave={handleDragLeave}
@@ -271,8 +298,12 @@ export function ImageUpload({ onImageChange, currentImage, className = '' }: Ima
                     <Upload className="w-6 h-6 text-primary animate-pulse" />
                   </div>
                   <div>
-                    <p className="text-foreground font-medium">Processing image...</p>
-                    <p className="text-muted-foreground text-sm">Please wait while we prepare your image</p>
+                    <p className="text-foreground font-medium">
+                      Processing image...
+                    </p>
+                    <p className="text-muted-foreground text-sm">
+                      Please wait while we prepare your image
+                    </p>
                   </div>
                 </>
               ) : uploadSuccess && imagePreview ? (
@@ -281,8 +312,12 @@ export function ImageUpload({ onImageChange, currentImage, className = '' }: Ima
                     <CheckCircle className="w-6 h-6 text-primary" />
                   </div>
                   <div>
-                    <p className="text-primary font-medium">Upload successful!</p>
-                    <p className="text-muted-foreground text-sm">Click to upload a different image</p>
+                    <p className="text-primary font-medium">
+                      Upload successful!
+                    </p>
+                    <p className="text-muted-foreground text-sm">
+                      Click to upload a different image
+                    </p>
                   </div>
                 </>
               ) : (
@@ -292,7 +327,9 @@ export function ImageUpload({ onImageChange, currentImage, className = '' }: Ima
                   </div>
                   <div>
                     <p className="text-foreground font-medium">
-                      {isDragging ? 'Drop image here' : 'Click to upload or drag & drop'}
+                      {isDragging
+                        ? "Drop image here"
+                        : "Click to upload or drag & drop"}
                     </p>
                     <p className="text-muted-foreground text-sm">
                       PNG, JPG, GIF, WebP up to 10MB
@@ -319,7 +356,7 @@ export function ImageUpload({ onImageChange, currentImage, className = '' }: Ima
               <Link className="w-4 h-4 mr-2" />
               Use Image URL
             </Button>
-            
+
             <Button
               type="button"
               size="sm"
@@ -344,7 +381,7 @@ export function ImageUpload({ onImageChange, currentImage, className = '' }: Ima
                   placeholder="https://example.com/image.jpg"
                   className="flex-1 px-3 py-2 bg-[#2d2d2d] border border-white/20 rounded-lg text-foreground placeholder:text-muted-foreground focus:border-primary focus:ring-1 focus:ring-primary"
                   disabled={isUploading}
-                  onKeyPress={(e) => e.key === 'Enter' && handleUrlSubmit()}
+                  onKeyPress={(e) => e.key === "Enter" && handleUrlSubmit()}
                 />
                 <Button
                   type="button"
@@ -381,12 +418,13 @@ export function ImageUpload({ onImageChange, currentImage, className = '' }: Ima
                   <li>• Use high-quality images (1200x800px or larger)</li>
                   <li>• Ensure good contrast and readability</li>
                   <li>• Avoid heavily compressed or blurry images</li>
-                  <li>• Landscape orientation works best for template previews</li>
+                  <li>
+                    • Landscape orientation works best for template previews
+                  </li>
                 </ul>
               </div>
             </div>
           )}
-
         </CardContent>
       </Card>
     </div>

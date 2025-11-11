@@ -1,26 +1,31 @@
-import React from 'react';
-import { Button } from './ui/button';
-import { Badge } from './ui/badge';
-import { Card } from './ui/card';
-import { Star, Heart, Eye, ShoppingCart } from 'lucide-react';
-import { Template, formatPrice } from './data/TemplateData';
-import { ImageWithFallback } from './figma/ImageWithFallback';
-import { CompactBuyButton } from './GumroadIntegration';
+import React from "react";
+import { Button } from "./ui/button";
+import { Badge } from "./ui/badge";
+import { Card } from "./ui/card";
+import { Star, Heart, Eye, ShoppingCart } from "lucide-react";
+import { formatPrice } from "./data/TemplateData";
+import { ImageWithFallback } from "./figma/ImageWithFallback";
+import { CompactBuyButton } from "./GumroadIntegration";
 
 interface TemplateCardProps {
-  template: Template;
+  template: any;
   onSelect: (templateId: string) => void;
   onBuy?: (templateId: string) => void;
   className?: string;
 }
 
-export function TemplateCard({ template, onSelect, onBuy, className = '' }: TemplateCardProps) {
+export function TemplateCard({
+  template,
+  onSelect,
+  onBuy,
+  className = "",
+}: TemplateCardProps) {
   // Figma demo URL for all previews
-  const FIGMA_DEMO_URL = 'https://clap-handle-87301877.figma.site';
+  const FIGMA_DEMO_URL = "https://clap-handle-87301877.figma.site";
 
   const handlePreviewClick = (e: React.MouseEvent) => {
     e.stopPropagation();
-    window.open(FIGMA_DEMO_URL, '_blank', 'noopener,noreferrer');
+    window.open(FIGMA_DEMO_URL, "_blank", "noopener,noreferrer");
   };
 
   const handleCardClick = () => {
@@ -35,7 +40,7 @@ export function TemplateCard({ template, onSelect, onBuy, className = '' }: Temp
   };
 
   return (
-    <Card 
+    <Card
       className={`bg-card border-white/10 overflow-hidden hover:border-primary/30 transition-all duration-300 hover:scale-105 group cursor-pointer ${className}`}
       onClick={handleCardClick}
     >
@@ -46,21 +51,27 @@ export function TemplateCard({ template, onSelect, onBuy, className = '' }: Temp
           className="w-full h-full object-cover transition-transform group-hover:scale-110"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-        
+
         {/* Badges */}
         <div className="absolute top-4 left-4 flex gap-2">
           {template.isNew && (
-            <Badge className="bg-primary/90 text-primary-foreground border-none">New</Badge>
+            <Badge className="bg-primary/90 text-primary-foreground border-none">
+              New
+            </Badge>
           )}
           {template.isBestSeller && (
-            <Badge className="bg-yellow-500/90 text-white border-none">Best Seller</Badge>
+            <Badge className="bg-yellow-500/90 text-white border-none">
+              Best Seller
+            </Badge>
           )}
         </div>
 
         {/* Price */}
         <div className="absolute top-4 right-4">
           <div className="bg-black/70 backdrop-blur-sm rounded-lg px-3 py-1">
-            <span className="text-white font-bold">{formatPrice(template.price)}</span>
+            <span className="text-white font-bold">
+              {formatPrice(template.price)}
+            </span>
           </div>
         </div>
 
@@ -101,9 +112,13 @@ export function TemplateCard({ template, onSelect, onBuy, className = '' }: Temp
         <div className="flex items-center gap-2 mb-4">
           <div className="flex items-center gap-1">
             <Star className="w-4 h-4 text-yellow-500 fill-current" />
-            <span className="text-sm font-medium text-foreground">{template.rating}</span>
+            <span className="text-sm font-medium text-foreground">
+              {template.rating}
+            </span>
           </div>
-          <span className="text-sm text-muted-foreground">({template.reviews})</span>
+          <span className="text-sm text-muted-foreground">
+            ({template.reviews})
+          </span>
           <div className="flex-1" />
           <Badge variant="outline" className="text-xs">
             {template.difficulty}
@@ -124,11 +139,11 @@ export function TemplateCard({ template, onSelect, onBuy, className = '' }: Temp
             <Eye className="w-4 h-4 mr-1" />
             Preview
           </Button>
-          
+
           {/* Gumroad Purchase Button */}
           {template.gumroadUrl ? (
             <div onClick={(e) => e.stopPropagation()}>
-              <CompactBuyButton 
+              <CompactBuyButton
                 productUrl={template.gumroadUrl}
                 price={formatPrice(template.price)}
               />

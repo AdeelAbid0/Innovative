@@ -1,4 +1,3 @@
-import React from "react";
 import { Button } from "../ui/button";
 import { Card, CardContent } from "../ui/card";
 import { Badge } from "../ui/badge";
@@ -12,7 +11,6 @@ import {
   ArrowRight,
   CheckCircle,
   Zap,
-  Award,
   Brain,
   Shield,
   Settings,
@@ -26,7 +24,14 @@ import {
   useStaggeredAnimation,
 } from "../hooks/useScrollAnimation";
 
-type Page = "home" | "about" | "services" | "contact" | "thank-you" | "admin";
+type Page =
+  | "home"
+  | "about"
+  | "services"
+  | "work"
+  | "contact"
+  | "thank-you"
+  | "case-study";
 
 interface AboutPageProps {
   onNavigate: (page: Page) => void;
